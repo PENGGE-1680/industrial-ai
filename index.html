@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="工业 AI 智能工作台，用于模拟工业文件分析、设备诊断和交付物生成流程。"
+    />
+    <title>工业 AI 智能工作台</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="主导航">
+        <div class="brand">
+          <div class="brand-mark" aria-hidden="true">IA</div>
+          <div>
+            <strong>工业 AI</strong>
+            <span>智能工作台</span>
+          </div>
+        </div>
+
+        <nav class="nav-list">
+          <button class="nav-item active" type="button" data-view="workspace" title="任务工作台">
+            <span class="icon">▦</span>
+            <span>任务工作台</span>
+          </button>
+          <button class="nav-item" type="button" data-view="projects" title="工厂空间">
+            <span class="icon">▣</span>
+            <span>工厂空间</span>
+          </button>
+          <button class="nav-item" type="button" data-view="results" title="结果中心">
+            <span class="icon">✓</span>
+            <span>结果中心</span>
+          </button>
+        </nav>
+
+        <div class="sidebar-footer">
+          <span>系统状态</span>
+          <strong>智能执行引擎在线</strong>
+        </div>
+      </aside>
+
+      <main class="main">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Industrial AI Workspace</p>
+            <h1>让工业 AI 直接完成现场任务</h1>
+          </div>
+          <div class="status-strip" aria-label="系统状态">
+            <span><b></b>任务编排器就绪</span>
+            <span>今日模拟任务 18</span>
+          </div>
+        </header>
+
+        <section class="view active" id="workspace">
+          <div class="workspace-grid">
+            <section class="task-panel">
+              <div class="section-heading">
+                <div>
+                  <p class="eyebrow">Task Desk</p>
+                  <h2>新建工业任务</h2>
+                </div>
+                <button class="ghost-btn" type="button" id="templateBtn">套用模板</button>
+              </div>
+
+              <label class="field">
+                <span>任务目标</span>
+                <textarea id="taskInput" rows="7">分析这批设备报警日志，找出高频异常、可能原因，并生成一份给设备工程师看的诊断报告。</textarea>
+              </label>
+
+              <div class="field-row">
+                <label class="field">
+                  <span>产线/设备</span>
+                  <select id="assetSelect">
+                    <option>注塑一线 · 伺服压机 A12</option>
+                    <option>总装三线 · 视觉检测站 V03</option>
+                    <option>能源站 · 空压机 K7</option>
+                    <option>通用工业任务</option>
+                  </select>
+                </label>
+                <label class="field">
+                  <span>交付物</span>
+                  <select id="deliverableSelect">
+                    <option>诊断报告 + 图表</option>
+                    <option>Python 数据处理脚本</option>
+                    <option>异常清单 Excel</option>
+                    <option>工程方案文档</option>
+                  </select>
+                </label>
+              </div>
+
+              <div class="upload-zone" id="uploadZone">
+                <input id="fileInput" type="file" multiple />
+                <div class="upload-visual" aria-hidden="true">
+                  <span></span><span></span><span></span>
+                </div>
+                <strong>拖入或选择工业文件</strong>
+                <p>支持 Excel、CSV、PDF、日志、点检表、报警记录</p>
+              </div>
+
+              <div class="file-list" id="fileList" aria-live="polite"></div>
+
+              <div class="section-heading compact">
+                <h2>智能执行配置</h2>
+                <div class="segmented" role="group" aria-label="编排方式">
+                  <button class="active" type="button" data-mode="auto">自动</button>
+                  <button type="button" data-mode="manual">手动</button>
+                </div>
+              </div>
+
+              <div class="engine-grid">
+                <button class="engine-card selected" type="button" data-engine="数据处理引擎">
+                  <span class="engine-badge">数</span>
+                  <strong>数据处理引擎</strong>
+                  <small>清洗数据、生成脚本、整理表格、输出图表</small>
+                </button>
+                <button class="engine-card selected" type="button" data-engine="工程诊断引擎">
+                  <span class="engine-badge alt">诊</span>
+                  <strong>工程诊断引擎</strong>
+                  <small>分析原因、生成建议、审查结论、撰写报告</small>
+                </button>
+              </div>
+
+              <button class="primary-btn" type="button" id="runBtn">
+                <span>▶</span>
+                <strong>启动智能任务</strong>
+              </button>
+            </section>
+
+            <section class="operations-panel">
+              <div class="industrial-map" aria-label="工业现场状态示意">
+                <div class="map-line"></div>
+                <div class="machine m1">
+                  <span></span>
+                  <b>PLC</b>
+                </div>
+                <div class="machine m2">
+                  <span></span>
+                  <b>MES</b>
+                </div>
+                <div class="machine m3">
+                  <span></span>
+                  <b>SCADA</b>
+                </div>
+                <div class="signal active"></div>
+                <div class="signal"></div>
+              </div>
+
+              <div class="run-card">
+                <div class="section-heading">
+                  <div>
+                    <p class="eyebrow">Execution</p>
+                    <h2>执行过程</h2>
+                  </div>
+                  <span class="run-state" id="runState">待启动</span>
+                </div>
+                <ol class="timeline" id="timeline">
+                  <li class="pending">读取任务与文件上下文</li>
+                  <li class="pending">拆解工业分析步骤</li>
+                  <li class="pending">调用数据处理与工程诊断能力</li>
+                  <li class="pending">生成诊断结果与交付物</li>
+                </ol>
+              </div>
+
+              <div class="result-card">
+                <div class="section-heading compact">
+                  <h2>结果预览</h2>
+                  <button class="ghost-btn" type="button" id="saveBtn">保存</button>
+                </div>
+                <div id="resultOutput" class="result-output">
+                  <p>任务启动后，这里会显示工业 AI 交付物摘要。</p>
+                </div>
+              </div>
+            </section>
+          </div>
+        </section>
+
+        <section class="view" id="projects">
+          <div class="page-band">
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">Factory Space</p>
+                <h2>工厂空间</h2>
+              </div>
+            </div>
+            <div class="project-grid">
+              <article class="project-card">
+                <strong>注塑一线</strong>
+                <span>14 台设备 · 238 份历史文件</span>
+                <meter min="0" max="100" value="72"></meter>
+              </article>
+              <article class="project-card">
+                <strong>总装三线</strong>
+                <span>视觉检测、拧紧、输送节拍</span>
+                <meter min="0" max="100" value="84"></meter>
+              </article>
+              <article class="project-card">
+                <strong>能源站</strong>
+                <span>空压机、冷却水、能耗分析</span>
+                <meter min="0" max="100" value="61"></meter>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section class="view" id="results">
+          <div class="page-band">
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">Result Center</p>
+                <h2>结果中心</h2>
+              </div>
+            </div>
+            <div class="saved-list" id="savedList">
+              <article>
+                <strong>报警日志高频异常诊断</strong>
+                <span>报告 · 智能诊断 · 今天</span>
+              </article>
+              <article>
+                <strong>空压机能耗趋势脚本</strong>
+                <span>Python · 数据处理 · 昨天</span>
+              </article>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="/app.js"></script>
+  </body>
+</html>

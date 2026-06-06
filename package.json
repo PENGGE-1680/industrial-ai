@@ -1,0 +1,10 @@
+{
+  "name": "industrial-ai",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Industrial AI static web app for Vercel deployment.",
+  "scripts": {
+    "build": "node scripts/build.js",
+    "start": "node scripts/serve.js"
+  }
+}
