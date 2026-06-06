@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="工业 AI 智能工作台，用于模拟工业文件分析、设备诊断和交付物生成流程。"
+      content="工业 AI 平台，面向设备诊断、产线监控、知识库检索与工程任务编排。"
     />
-    <title>工业 AI 智能工作台</title>
+    <title>工业 AI 平台</title>
     <link rel="stylesheet" href="/styles.css" />
   </head>
   <body>
@@ -16,94 +16,148 @@
         <div class="brand">
           <div class="brand-mark" aria-hidden="true">IA</div>
           <div>
-            <strong>工业 AI</strong>
-            <span>智能工作台</span>
+            <strong>工业 AI 平台</strong>
+            <span>设备诊断与生产智能</span>
           </div>
         </div>
 
         <nav class="nav-list">
-          <button class="nav-item active" type="button" data-view="workspace" title="任务工作台">
-            <span class="icon">▦</span>
-            <span>任务工作台</span>
+          <button class="nav-item active" type="button" data-view="overview" title="运营总览">
+            <span class="icon">⌂</span><span>运营总览</span>
           </button>
-          <button class="nav-item" type="button" data-view="projects" title="工厂空间">
-            <span class="icon">▣</span>
-            <span>工厂空间</span>
+          <button class="nav-item" type="button" data-view="workspace" title="AI 任务">
+            <span class="icon">▦</span><span>AI 任务</span>
+          </button>
+          <button class="nav-item" type="button" data-view="assets" title="设备资产">
+            <span class="icon">▣</span><span>设备资产</span>
+          </button>
+          <button class="nav-item" type="button" data-view="monitor" title="实时监控">
+            <span class="icon">◌</span><span>实时监控</span>
+          </button>
+          <button class="nav-item" type="button" data-view="knowledge" title="知识库">
+            <span class="icon">◇</span><span>知识库</span>
           </button>
           <button class="nav-item" type="button" data-view="results" title="结果中心">
-            <span class="icon">✓</span>
-            <span>结果中心</span>
+            <span class="icon">✓</span><span>结果中心</span>
           </button>
         </nav>
 
         <div class="sidebar-footer">
-          <span>系统状态</span>
-          <strong>智能执行引擎在线</strong>
+          <span>平台状态</span>
+          <strong><b></b> 智能执行引擎在线</strong>
         </div>
       </aside>
 
       <main class="main">
         <header class="topbar">
           <div>
-            <p class="eyebrow">Industrial AI Workspace</p>
-            <h1>让工业 AI 直接完成现场任务</h1>
+            <p class="eyebrow">Industrial AI Operations</p>
+            <h1>把设备数据、工程经验和 AI 任务编排到一个平台里</h1>
           </div>
-          <div class="status-strip" aria-label="系统状态">
-            <span><b></b>任务编排器就绪</span>
-            <span>今日模拟任务 18</span>
+          <div class="status-strip" aria-label="关键状态">
+            <span><b></b> 生产数据接入</span>
+            <span id="clockText">平台时间同步中</span>
           </div>
         </header>
 
-        <section class="view active" id="workspace">
-          <div class="workspace-grid">
-            <section class="task-panel">
+        <section class="view active" id="overview">
+          <div class="metric-grid">
+            <article class="metric-card">
+              <span>在线设备</span>
+              <strong id="onlineMetric">42</strong>
+              <small>覆盖注塑、总装、能源站</small>
+            </article>
+            <article class="metric-card warning">
+              <span>待处理告警</span>
+              <strong id="alarmMetric">7</strong>
+              <small>2 项高优先级</small>
+            </article>
+            <article class="metric-card">
+              <span>今日 AI 任务</span>
+              <strong id="taskMetric">18</strong>
+              <small>平均节省 42 分钟/次</small>
+            </article>
+            <article class="metric-card danger">
+              <span>风险设备</span>
+              <strong>3</strong>
+              <small>建议今日复检</small>
+            </article>
+          </div>
+
+          <div class="overview-grid">
+            <section class="panel">
               <div class="section-heading">
                 <div>
-                  <p class="eyebrow">Task Desk</p>
-                  <h2>新建工业任务</h2>
+                  <p class="eyebrow">Production Map</p>
+                  <h2>产线运行图</h2>
+                </div>
+                <span class="pill">实时模拟</span>
+              </div>
+              <div class="factory-map" aria-label="产线运行图">
+                <div class="conveyor"></div>
+                <div class="station s1"><b>注塑</b><span>A12 正常</span></div>
+                <div class="station s2 hot"><b>总装</b><span>V03 告警</span></div>
+                <div class="station s3"><b>能源</b><span>K7 关注</span></div>
+                <div class="station s4"><b>仓储</b><span>WMS 正常</span></div>
+                <i class="packet"></i>
+              </div>
+            </section>
+
+            <section class="panel">
+              <div class="section-heading">
+                <div>
+                  <p class="eyebrow">AI Queue</p>
+                  <h2>智能任务队列</h2>
+                </div>
+                <button class="ghost-btn" type="button" data-jump="workspace">新建任务</button>
+              </div>
+              <div class="queue-list" id="queueList"></div>
+            </section>
+          </div>
+        </section>
+
+        <section class="view" id="workspace">
+          <div class="workspace-grid">
+            <section class="panel">
+              <div class="section-heading">
+                <div>
+                  <p class="eyebrow">Task Orchestration</p>
+                  <h2>新建工业 AI 任务</h2>
                 </div>
                 <button class="ghost-btn" type="button" id="templateBtn">套用模板</button>
               </div>
 
               <label class="field">
                 <span>任务目标</span>
-                <textarea id="taskInput" rows="7">分析这批设备报警日志，找出高频异常、可能原因，并生成一份给设备工程师看的诊断报告。</textarea>
+                <textarea id="taskInput" rows="6">分析注塑一线 A12 最近 24 小时报警日志，识别高频异常、可能根因和现场处置建议。</textarea>
               </label>
 
               <div class="field-row">
                 <label class="field">
                   <span>产线/设备</span>
-                  <select id="assetSelect">
-                    <option>注塑一线 · 伺服压机 A12</option>
-                    <option>总装三线 · 视觉检测站 V03</option>
-                    <option>能源站 · 空压机 K7</option>
-                    <option>通用工业任务</option>
-                  </select>
+                  <select id="assetSelect"></select>
                 </label>
                 <label class="field">
                   <span>交付物</span>
                   <select id="deliverableSelect">
                     <option>诊断报告 + 图表</option>
-                    <option>Python 数据处理脚本</option>
                     <option>异常清单 Excel</option>
-                    <option>工程方案文档</option>
+                    <option>Python 数据处理脚本</option>
+                    <option>工程整改方案</option>
                   </select>
                 </label>
               </div>
 
               <div class="upload-zone" id="uploadZone">
                 <input id="fileInput" type="file" multiple />
-                <div class="upload-visual" aria-hidden="true">
-                  <span></span><span></span><span></span>
-                </div>
+                <div class="upload-visual" aria-hidden="true"><span></span><span></span><span></span></div>
                 <strong>拖入或选择工业文件</strong>
                 <p>支持 Excel、CSV、PDF、日志、点检表、报警记录</p>
               </div>
-
               <div class="file-list" id="fileList" aria-live="polite"></div>
 
               <div class="section-heading compact">
-                <h2>智能执行配置</h2>
+                <h2>执行能力</h2>
                 <div class="segmented" role="group" aria-label="编排方式">
                   <button class="active" type="button" data-mode="auto">自动</button>
                   <button type="button" data-mode="manual">手动</button>
@@ -111,44 +165,35 @@
               </div>
 
               <div class="engine-grid">
-                <button class="engine-card selected" type="button" data-engine="数据处理引擎">
+                <button class="engine-card selected" type="button" data-engine="数据处理">
                   <span class="engine-badge">数</span>
-                  <strong>数据处理引擎</strong>
-                  <small>清洗数据、生成脚本、整理表格、输出图表</small>
+                  <strong>数据处理</strong>
+                  <small>清洗日志、整理表格、生成图表和脚本。</small>
                 </button>
-                <button class="engine-card selected" type="button" data-engine="工程诊断引擎">
+                <button class="engine-card selected" type="button" data-engine="工程诊断">
                   <span class="engine-badge alt">诊</span>
-                  <strong>工程诊断引擎</strong>
-                  <small>分析原因、生成建议、审查结论、撰写报告</small>
+                  <strong>工程诊断</strong>
+                  <small>推断根因、匹配知识库、输出处置建议。</small>
+                </button>
+                <button class="engine-card" type="button" data-engine="质量分析">
+                  <span class="engine-badge amber">质</span>
+                  <strong>质量分析</strong>
+                  <small>关联不良率、节拍、批次和巡检记录。</small>
+                </button>
+                <button class="engine-card" type="button" data-engine="文档生成">
+                  <span class="engine-badge steel">文</span>
+                  <strong>文档生成</strong>
+                  <small>生成工程报告、复盘纪要和整改清单。</small>
                 </button>
               </div>
 
               <button class="primary-btn" type="button" id="runBtn">
-                <span>▶</span>
-                <strong>启动智能任务</strong>
+                <span>▶</span><strong>启动智能任务</strong>
               </button>
             </section>
 
             <section class="operations-panel">
-              <div class="industrial-map" aria-label="工业现场状态示意">
-                <div class="map-line"></div>
-                <div class="machine m1">
-                  <span></span>
-                  <b>PLC</b>
-                </div>
-                <div class="machine m2">
-                  <span></span>
-                  <b>MES</b>
-                </div>
-                <div class="machine m3">
-                  <span></span>
-                  <b>SCADA</b>
-                </div>
-                <div class="signal active"></div>
-                <div class="signal"></div>
-              </div>
-
-              <div class="run-card">
+              <div class="panel">
                 <div class="section-heading">
                   <div>
                     <p class="eyebrow">Execution</p>
@@ -158,16 +203,16 @@
                 </div>
                 <ol class="timeline" id="timeline">
                   <li class="pending">读取任务与文件上下文</li>
-                  <li class="pending">拆解工业分析步骤</li>
-                  <li class="pending">调用数据处理与工程诊断能力</li>
+                  <li class="pending">识别设备、报警、工艺和质量字段</li>
+                  <li class="pending">匹配知识库并生成根因假设</li>
                   <li class="pending">生成诊断结果与交付物</li>
                 </ol>
               </div>
 
-              <div class="result-card">
+              <div class="panel">
                 <div class="section-heading compact">
                   <h2>结果预览</h2>
-                  <button class="ghost-btn" type="button" id="saveBtn">保存</button>
+                  <button class="ghost-btn" type="button" id="saveBtn">保存到结果中心</button>
                 </div>
                 <div id="resultOutput" class="result-output">
                   <p>任务启动后，这里会显示工业 AI 交付物摘要。</p>
@@ -177,52 +222,66 @@
           </div>
         </section>
 
-        <section class="view" id="projects">
-          <div class="page-band">
+        <section class="view" id="assets">
+          <div class="panel">
             <div class="section-heading">
               <div>
-                <p class="eyebrow">Factory Space</p>
-                <h2>工厂空间</h2>
+                <p class="eyebrow">Asset Registry</p>
+                <h2>设备资产台账</h2>
               </div>
+              <input class="search-input" id="assetSearch" type="search" placeholder="搜索设备、产线或状态" />
             </div>
-            <div class="project-grid">
-              <article class="project-card">
-                <strong>注塑一线</strong>
-                <span>14 台设备 · 238 份历史文件</span>
-                <meter min="0" max="100" value="72"></meter>
-              </article>
-              <article class="project-card">
-                <strong>总装三线</strong>
-                <span>视觉检测、拧紧、输送节拍</span>
-                <meter min="0" max="100" value="84"></meter>
-              </article>
-              <article class="project-card">
-                <strong>能源站</strong>
-                <span>空压机、冷却水、能耗分析</span>
-                <meter min="0" max="100" value="61"></meter>
-              </article>
+            <div class="asset-table" id="assetTable"></div>
+          </div>
+        </section>
+
+        <section class="view" id="monitor">
+          <div class="monitor-grid">
+            <section class="panel">
+              <div class="section-heading">
+                <div>
+                  <p class="eyebrow">Live Signals</p>
+                  <h2>关键实时信号</h2>
+                </div>
+                <span class="pill" id="refreshText">刚刚刷新</span>
+              </div>
+              <div class="signal-grid" id="signalGrid"></div>
+            </section>
+            <section class="panel">
+              <div class="section-heading">
+                <div>
+                  <p class="eyebrow">Alarm Stream</p>
+                  <h2>告警流</h2>
+                </div>
+              </div>
+              <div class="alarm-list" id="alarmList"></div>
+            </section>
+          </div>
+        </section>
+
+        <section class="view" id="knowledge">
+          <div class="panel">
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">Knowledge Base</p>
+                <h2>工程知识库</h2>
+              </div>
+              <input class="search-input" id="knowledgeSearch" type="search" placeholder="搜索故障、设备、处置建议" />
             </div>
+            <div class="knowledge-grid" id="knowledgeGrid"></div>
           </div>
         </section>
 
         <section class="view" id="results">
-          <div class="page-band">
+          <div class="panel">
             <div class="section-heading">
               <div>
                 <p class="eyebrow">Result Center</p>
                 <h2>结果中心</h2>
               </div>
+              <button class="ghost-btn" type="button" id="clearResultsBtn">清空本地新增</button>
             </div>
-            <div class="saved-list" id="savedList">
-              <article>
-                <strong>报警日志高频异常诊断</strong>
-                <span>报告 · 智能诊断 · 今天</span>
-              </article>
-              <article>
-                <strong>空压机能耗趋势脚本</strong>
-                <span>Python · 数据处理 · 昨天</span>
-              </article>
-            </div>
+            <div class="saved-list" id="savedList"></div>
           </div>
         </section>
       </main>
